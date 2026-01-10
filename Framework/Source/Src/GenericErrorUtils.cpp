@@ -1,9 +1,9 @@
 #include <windows.h>
 
-#include "ErrorUtils.h"
+#include "GenericErrorUtils.h"
 #include "StringUtils.h"
 
-void ErrorUtils::ReportAssertion(const char* expression, const char* file, uint32_t line, const std::string& description)
+void GenericErrorUtils::ReportAssertion(const char* expression, const char* file, uint32_t line, const std::string& description)
 {
 	std::string message = StringUtils::PrintF("Assertion check point failed!\nFile : %s\nLine : %d\nExpression : %s", file, line, expression);
 	if (!description.empty())

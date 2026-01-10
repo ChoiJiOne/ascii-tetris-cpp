@@ -2,7 +2,7 @@
 
 #include <windows.h>
 
-#include "ErrorUtils.h"
+#include "GenericErrorUtils.h"
 #include "StringUtils.h"
 
 #if defined(DEBUG_MODE) || defined(REL_WITH_DEB_INFO_MODE) || defined(RELEASE_MODE)
@@ -11,7 +11,7 @@
 {\
 	if(!(bool)(EXP))\
 	{\
-		ErrorUtils::ReportAssertion(#EXP, __FILE__, __LINE__);\
+		GenericErrorUtils::ReportAssertion(#EXP, __FILE__, __LINE__);\
 		__debugbreak();\
 	}\
 }
@@ -21,7 +21,7 @@
 {\
 	if(!(bool)(EXP))\
 	{\
-		ErrorUtils::ReportAssertion(#EXP, __FILE__, __LINE__, StringUtils::PrintF(__VA_ARGS__));\
+		GenericErrorUtils::ReportAssertion(#EXP, __FILE__, __LINE__, StringUtils::PrintF(__VA_ARGS__));\
 		__debugbreak();\
 	}\
 }
