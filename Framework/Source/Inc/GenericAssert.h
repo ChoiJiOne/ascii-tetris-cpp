@@ -4,8 +4,8 @@
 #include "StringUtils.h"
 
 #if defined(DEBUG_MODE) || defined(REL_WITH_DEB_INFO_MODE) || defined(RELEASE_MODE)
-#ifndef GAME_CHECK
-#define GAME_CHECK(EXP)\
+#ifndef CHECK
+#define CHECK(EXP)\
 {\
 	if(!(bool)(EXP))\
 	{\
@@ -14,8 +14,8 @@
 	}\
 }
 #endif
-#ifndef GAME_ASSERT
-#define GAME_ASSERT(EXP, ...)\
+#ifndef ASSERT
+#define ASSERT(EXP, ...)\
 {\
 	if(!(bool)(EXP))\
 	{\
@@ -25,10 +25,10 @@
 }
 #endif
 #else // MINSIZEREL
-#ifndef GAME_CHECK
-#define GAME_CHECK(EXP) ((void)(EXP))
+#ifndef CHECK
+#define CHECK(EXP) ((void)(EXP))
 #endif
-#ifndef GAME_ASSERT
-#define GAME_ASSERT(EXP, ...) ((void)(EXP))
+#ifndef ASSERT
+#define ASSERT(EXP, ...) ((void)(EXP))
 #endif
 #endif

@@ -1,5 +1,5 @@
 #include "IApp.h"
-#include "GameAssert.h"
+#include "GenericAssert.h"
 
 IApp* IApp::_app = nullptr;
 
