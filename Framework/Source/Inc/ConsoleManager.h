@@ -5,6 +5,25 @@
 
 #include "IManager.h"
 
+enum class EConsoleColor : uint16_t
+{
+	BLACK   = 0,
+	BLUE    = 1,
+	GREEN   = 2,
+	CYAN    = 3,
+	RED     = 4,
+	MAGENTA = 5,
+	YELLOW  = 6,
+	WHITE   = 7,
+	BRIGHT_BLUE    = 9,
+	BRIGHT_GREEN   = 10,
+	BRIGHT_CYAN    = 11,
+	BRIGHT_RED     = 12,
+	BRIGHT_MAGENTA = 13,
+	BRIGHT_YELLOW  = 14,
+	BRIGHT_WHITE   = 15,
+};
+
 class ConsoleManager : public IManager<ConsoleManager>
 {
 public:
@@ -20,7 +39,16 @@ public:
 	Result<void> ClearRegion(int32_t x, int32_t y, int32_t width, int32_t height);
 
 	Result<void> Print(int32_t x, int32_t y, char c);
+	Result<void> Print(int32_t x, int32_t y, char c, EConsoleColor color);
 	Result<void> Print(int32_t x, int32_t y, const std::string_view& str);
+	Result<void> Print(int32_t x, int32_t y, const std::string_view& str, EConsoleColor color);
+
+	Result<void> SetColor(EConsoleColor color);
+	Result<void> SetColor(EConsoleColor color, EConsoleColor bgColor);
+	Result<void> ResetColor();
+
+private:
+	uint16_t ConvertColorToByte(EConsoleColor color);
 
 private:
 	friend class IManager<ConsoleManager>;

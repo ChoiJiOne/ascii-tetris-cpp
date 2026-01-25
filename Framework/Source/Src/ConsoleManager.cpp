@@ -156,3 +156,75 @@ Result<void> ConsoleManager::Print(int32_t x, int32_t y, const std::string_view&
 
 	return Result<void>::Success();
 }
+
+Result<void> ConsoleManager::Print(int32_t x, int32_t y, char c, EConsoleColor color)
+{
+	Result<void> result = SetColor(color);
+	if (!result.IsSuccess())
+	{
+		return result;
+	}
+
+	result = Print(x, y, c);
+	if (!result.IsSuccess())
+	{
+		return result;
+	}
+
+	return ResetColor();
+}
+
+Result<void> ConsoleManager::Print(int32_t x, int32_t y, const std::string_view& str, EConsoleColor color)
+{
+	Result<void> result = SetColor(color);
+	if (!result.IsSuccess())
+	{
+		return result;
+	}
+
+	result = Print(x, y, str);
+	if (!result.IsSuccess())
+	{
+		return result;
+	}
+
+	return ResetColor();
+}
+
+Result<void> ConsoleManager::SetColor(EConsoleColor color)
+{
+	uint16_t colorByte = ConvertColorToByte(color);
+	if (!SetConsoleTextAttribute(_outputHandle, colorByte))
+	{
+		return Result<void>::Fail(MAKE_ERROR(EErrorCode::PLATFORM_API_FAILED, "FAILED_TO_SET_COLOR"));
+	}
+
+	return Result<void>::Success();
+}
+
+Result<void> ConsoleManager::SetColor(EConsoleColor color, EConsoleColor bgColor)
+{
+	uint16_t colorByte = ConvertColorToByte(color) | (ConvertColorToByte(bgColor) << 4);
+	if (!SetConsoleTextAttribute(_outputHandle, colorByte))
+	{
+		return Result<void>::Fail(MAKE_ERROR(EErrorCode::PLATFORM_API_FAILED, "FAILED_TO_SET_COLOR"));
+	}
+
+	return Result<void>::Success();
+}
+
+Result<void> ConsoleManager::ResetColor()
+{
+	uint16_t colorByte = FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE;
+	if (!SetConsoleTextAttribute(_outputHandle, colorByte))
+	{
+		return Result<void>::Fail(MAKE_ERROR(EErrorCode::PLATFORM_API_FAILED, "FAILED_TO_SET_COLOR"));
+	}
+
+	return Result<void>::Success();
+}
+
+uint16_t ConsoleManager::ConvertColorToByte(EConsoleColor color)
+{
+	return static_cast<uint16_t>(color);
+}
