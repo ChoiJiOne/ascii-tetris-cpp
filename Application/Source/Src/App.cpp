@@ -1,9 +1,8 @@
-#include "Game.h"
+#include "App.h"
 
-Game::Game()
-{}
+App::App() {}
 
-Result<void> Game::OnStartup(const AppContext& appCtx)
+Result<void> App::OnStartup(const AppContext& appCtx)
 {
 	ConsoleManager* consoleMgr = appCtx.GetConsoleManager();
 	if (consoleMgr == nullptr)
@@ -18,7 +17,7 @@ Result<void> Game::OnStartup(const AppContext& appCtx)
 	return Result<void>::Success();
 }
 
-void Game::OnPreTick(const AppContext& appCtx, float deltaSeconds)
+void App::OnPreTick(const AppContext& appCtx, float deltaSeconds)
 {
 	InputManager* inputMgr = appCtx.GetInputManager();
 	if (inputMgr->GetKeyPress(EKey::ESCAPE) == EPress::PRESSED)
@@ -27,15 +26,15 @@ void Game::OnPreTick(const AppContext& appCtx, float deltaSeconds)
 	}
 }
 
-void Game::OnTick(const AppContext& appCtx, float deltaSeconds)
+void App::OnTick(const AppContext& appCtx, float deltaSeconds)
 {
 }
 
-void Game::OnPostTick(const AppContext& appCtx, float deltaSeconds)
+void App::OnPostTick(const AppContext& appCtx, float deltaSeconds)
 {
 }
 
-Result<void> Game::OnShutdown(const AppContext& appCtx)
+Result<void> App::OnShutdown(const AppContext& appCtx)
 {
 	ConsoleManager* consoleMgr = appCtx.GetConsoleManager();
 	if (consoleMgr == nullptr)

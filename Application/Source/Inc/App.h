@@ -1,15 +1,15 @@
 #pragma once
 
 #include "AppContext.h"
-#include "IGame.h"
+#include "IApp.h"
 
-class Game : public IGame
+class App : public IApp
 {
 public:
-	Game();
-	virtual ~Game() {}
+	App();
+	virtual ~App() {}
 
-	DISALLOW_COPY_AND_ASSIGN(Game);
+	DISALLOW_COPY_AND_ASSIGN(App);
 
 	virtual Result<void> OnStartup(const AppContext& appCtx) override;
 	virtual void OnPreTick(const AppContext& appCtx, float deltaSeconds) override;
