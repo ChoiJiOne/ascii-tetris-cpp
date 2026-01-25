@@ -1,6 +1,9 @@
 #include "App.h"
 
-App::App() {}
+App::App() 
+	: _renderer(ConsoleManager::GetPtr(), &_ctx)
+{
+}
 
 Result<void> App::OnStartup(const AppContext& appCtx)
 {
@@ -13,6 +16,8 @@ Result<void> App::OnStartup(const AppContext& appCtx)
 	consoleMgr->SetVisibleCursor(false);
 	consoleMgr->SetTitle("Tetris"); // TODO: 하드 코딩 제거 필요.
 	consoleMgr->Clear();
+
+	_ctx.Reset();
 
 	return Result<void>::Success();
 }
@@ -32,6 +37,7 @@ void App::OnTick(const AppContext& appCtx, float deltaSeconds)
 
 void App::OnPostTick(const AppContext& appCtx, float deltaSeconds)
 {
+	_renderer.Render(); // NOTE: 규칙만 갖춘다면 Game에서 렌더링 처리를 할 필요가 있을까? 프레임워크에서 해주면 안되나?
 }
 
 Result<void> App::OnShutdown(const AppContext& appCtx)
