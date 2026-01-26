@@ -57,6 +57,7 @@ Result<void> AppHost::Run(IApp& app)
 		app.OnPreTick(ctx, _timer.GetDeltaSeconds());
 		app.OnTick(ctx, _timer.GetDeltaSeconds());
 		app.OnPostTick(ctx, _timer.GetDeltaSeconds());
+		app.OnRender(ctx);
 	}
 
 	Result<void> resultShutdown = app.OnShutdown(ctx);

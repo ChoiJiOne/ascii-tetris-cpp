@@ -18,6 +18,7 @@ public:
 	virtual void OnPreTick(const AppContext& appCtx, float deltaSeconds) override;
 	virtual void OnTick(const AppContext& appCtx, float deltaSeconds) override;
 	virtual void OnPostTick(const AppContext& appCtx, float deltaSeconds) override;
+	virtual void OnRender(const AppContext& appCtx) override;
 	virtual Result<void> OnShutdown(const AppContext& appCtx) override;
 
 private:

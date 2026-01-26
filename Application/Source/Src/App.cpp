@@ -37,7 +37,11 @@ void App::OnTick(const AppContext& appCtx, float deltaSeconds)
 
 void App::OnPostTick(const AppContext& appCtx, float deltaSeconds)
 {
-	_renderer.Render(); // NOTE: 규칙만 갖춘다면 Game에서 렌더링 처리를 할 필요가 있을까? 프레임워크에서 해주면 안되나? (나중에는 프레임워크에서 렌더링하도록 수정 예정)
+}
+
+void App::OnRender(const AppContext& appCtx)
+{
+	_renderer.Render();
 }
 
 Result<void> App::OnShutdown(const AppContext& appCtx)
