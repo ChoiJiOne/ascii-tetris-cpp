@@ -59,7 +59,7 @@ private:
 	bool _isDirtyTile = false;
 
 	int32_t _rowSize = 20; // 세로 크기
-	int32_t _colSize = 20; // 가로 크기
+	int32_t _colSize = 18; // 가로 크기
 
 	std::vector<ETile> _tiles;
 
