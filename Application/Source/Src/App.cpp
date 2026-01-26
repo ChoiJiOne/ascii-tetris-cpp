@@ -25,6 +25,7 @@ Result<void> App::OnStartup(const AppContext& appCtx)
 	};
 
 	_ctx.Reset();
+	tetromino->Reset(); // TODO: 임시 코드 (삭제 예정)
 
 	return Result<void>::Success();
 }

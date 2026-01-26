@@ -32,6 +32,7 @@ public:
 	const ETile& GetTile(const Position& position) const;
 	const int32_t& GetRowSize() const { return _rowSize; }
 	const int32_t& GetColSize() const { return _colSize; }
+	const Position& GetStartPosition() const { return _startPosition; }
 
 	bool IsDirtyTile() const { return _isDirtyTile; }
 	bool IsValidTile(int32_t x, int32_t y) const;
@@ -65,4 +66,5 @@ private:
 
 	Position _minPosition = { 0, 0 };
 	Position _maxPosition = { 0, 0 };
+	Position _startPosition = { 0, 0 };
 };

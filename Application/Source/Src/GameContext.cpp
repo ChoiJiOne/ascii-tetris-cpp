@@ -7,6 +7,7 @@ GameContext::GameContext()
 	_tiles = std::vector<ETile>(_rowSize * _colSize, ETile::EMPTY);
 	_minPosition = { 1, 1 };
 	_maxPosition = { _colSize - 2, _rowSize - 2 };
+	_startPosition = { _colSize / 3, 1 };
 }
 
 GameContext::~GameContext()
