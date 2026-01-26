@@ -1,4 +1,5 @@
 #include "App.h"
+#include "Tetromino.h"
 
 App::App() 
 	: _renderer(ConsoleManager::GetPtr(), &_ctx)
@@ -17,6 +18,12 @@ Result<void> App::OnStartup(const AppContext& appCtx)
 	consoleMgr->SetTitle("Tetris"); // TODO: 하드 코딩 제거 필요.
 	consoleMgr->Clear();
 
+	Tetromino* tetromino = appCtx.GetActorManager()->Create<Tetromino>(&_ctx);
+	_actors =
+	{
+		tetromino,
+	};
+
 	_ctx.Reset();
 
 	return Result<void>::Success();
@@ -33,6 +40,10 @@ void App::OnPreTick(const AppContext& appCtx, float deltaSeconds)
 
 void App::OnTick(const AppContext& appCtx, float deltaSeconds)
 {
+	for (auto& actor : _actors)
+	{
+		actor->Tick(deltaSeconds);
+	}
 }
 
 void App::OnPostTick(const AppContext& appCtx, float deltaSeconds)

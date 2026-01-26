@@ -24,4 +24,6 @@ public:
 private:
 	GameContext _ctx;
 	GameRenderer _renderer;
+
+	std::vector<IActor*> _actors;
 };
