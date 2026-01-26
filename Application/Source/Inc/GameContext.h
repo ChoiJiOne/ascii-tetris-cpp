@@ -6,13 +6,7 @@
 #include "Macro.h"
 
 #include "Enum.h"
-
-// CHECKME: 나중에 하는 일 많아지면 class로 변경!
-struct Position
-{
-	int32_t x;
-	int32_t y;
-};
+#include "Tile.h"
 
 class GameContext
 {
@@ -25,11 +19,11 @@ public:
 	void Reset();
 
 	void SetDirtyTile(bool isDirty) { _isDirtyTile = isDirty; }
-	void SetTile(int32_t x, int32_t y, const ETileState& tile, bool bForceSet = false);
-	void SetTile(const Position& position, const ETileState& tile);
+	void SetTile(int32_t x, int32_t y, const ETileState& state, const EConsoleColor& color, bool bForceSet = false);
+	void SetTile(const Position& position, const ETileState& state, const EConsoleColor& color);
 
-	const ETileState& GetTile(int32_t x, int32_t y) const;
-	const ETileState& GetTile(const Position& position) const;
+	const Tile& GetTile(int32_t x, int32_t y) const;
+	const Tile& GetTile(const Position& position) const;
 	const int32_t& GetRowSize() const { return _rowSize; }
 	const int32_t& GetColSize() const { return _colSize; }
 	const Position& GetStartPosition() const { return _startPosition; }
@@ -62,7 +56,7 @@ private:
 	int32_t _rowSize = 20; // 세로 크기
 	int32_t _colSize = 18; // 가로 크기
 
-	std::vector<ETileState> _tiles;
+	std::vector<Tile> _tiles;
 
 	Position _minPosition = { 0, 0 };
 	Position _maxPosition = { 0, 0 };

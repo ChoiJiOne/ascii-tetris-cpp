@@ -35,10 +35,11 @@ void GameRenderer::RenderTile()
 	{
 		for (int32_t x = 0; x < colSize; ++x)
 		{
-			auto it = _tileCharMap.find(_gameCtx->GetTile(x, y));
+			const Tile& tile = _gameCtx->GetTile(x, y);
+			auto it = _tileCharMap.find(tile.GetState());
 			if (it != _tileCharMap.end())
 			{
-				_consoleMgr->Print(x, y, it->second);
+				_consoleMgr->Print(x, y, it->second, tile.GetColor());
 			}
 		}
 	}

@@ -4,48 +4,54 @@
 
 GameContext::GameContext()
 {
-	_tiles = std::vector<ETileState>(_rowSize * _colSize, ETileState::EMPTY);
 	_minPosition = { 1, 1 };
 	_maxPosition = { _colSize - 2, _rowSize - 2 };
 	_startPosition = { _colSize / 3, 1 };
-}
 
-GameContext::~GameContext()
-{
-}
-
-void GameContext::Reset()
-{
-	for (int y = 0; y < _rowSize; ++y)
+	for (int32_t y = 0; y < _rowSize; ++y)
 	{
-		for (int x = 0; x < _colSize; ++x)
+		for (int32_t x = 0; x < _colSize; ++x)
 		{
-			ETileState tile = IsOutline(x, y) ? ETileState::WALL : ETileState::EMPTY;
-			SetTile(x, y, tile);
+			_tiles.push_back(Tile(Position{ x, y }));
 		}
 	}
 }
 
-void GameContext::SetTile(int32_t x, int32_t y, const ETileState& tile, bool bForceSet)
+GameContext::~GameContext() {}
+
+void GameContext::Reset()
+{
+	for (int32_t y = 0; y < _rowSize; ++y)
+	{
+		for (int32_t x = 0; x < _colSize; ++x)
+		{
+			ETileState tile = IsOutline(x, y) ? ETileState::WALL : ETileState::EMPTY;
+			SetTile(x, y, tile, EConsoleColor::WHITE); // CHECKME: 일단 흰색 넣음.
+		}
+	}
+}
+
+void GameContext::SetTile(int32_t x, int32_t y, const ETileState& state, const EConsoleColor& color, bool bForceSet)
 {
 	CHECK(IsValidTile(x, y));
 
 	int32_t offset = y * _colSize + x;
-	if (!bForceSet && _tiles[offset] == tile)
+	if (!bForceSet && _tiles[offset].GetState() == state && _tiles[offset].GetColor() == color)
 	{
 		return;
 	}
 
-	_tiles[offset] = tile;
+	_tiles[offset].SetState(state);
+	_tiles[offset].SetColor(color);
 	_isDirtyTile = true;
 }
 
-void GameContext::SetTile(const Position& position, const ETileState& tile)
+void GameContext::SetTile(const Position& position, const ETileState& state, const EConsoleColor& color)
 {
-	return SetTile(position.x, position.y, tile);
+	return SetTile(position.x, position.y, state, color);
 }
 
-const ETileState& GameContext::GetTile(int32_t x, int32_t y) const
+const Tile& GameContext::GetTile(int32_t x, int32_t y) const
 {
 	CHECK(IsValidTile(x, y));
 
@@ -53,7 +59,7 @@ const ETileState& GameContext::GetTile(int32_t x, int32_t y) const
 	return _tiles[offset];
 }
 
-const ETileState& GameContext::GetTile(const Position& position) const
+const Tile& GameContext::GetTile(const Position& position) const
 {
 	return GetTile(position.x, position.y);
 }
@@ -72,7 +78,7 @@ bool GameContext::HasEmptyTile() const
 {
 	for (const auto& tile : _tiles)
 	{
-		if (tile == ETileState::EMPTY)
+		if (tile.GetState() == ETileState::EMPTY)
 		{
 			return true;
 		}
@@ -98,10 +104,10 @@ bool GameContext::CanMoveTo(int32_t srcX, int32_t srcY, int32_t dstX, int32_t ds
 		return false;
 	}
 
-	ETileState srcTile = GetTile(srcX, srcY);
-	ETileState dstTile = GetTile(dstX, dstY);
+	Tile srcTile = GetTile(srcX, srcY);
+	Tile dstTile = GetTile(dstX, dstY);
 
-	bool bCanMove = (dstTile == ETileState::EMPTY);
+	bool bCanMove = (dstTile.GetState() == ETileState::EMPTY);
 	return bCanMove;
 }
 
@@ -117,13 +123,13 @@ void GameContext::MoveTo(int32_t srcX, int32_t srcY, int32_t dstX, int32_t dstY,
 		return;
 	}
 
-	ETileState srcTile = GetTile(srcX, srcY);
-	ETileState dstTile = GetTile(dstX, dstY);
+	Tile srcTile = GetTile(srcX, srcY);
+	Tile dstTile = GetTile(dstX, dstY);
 
-	SetTile(dstX, dstY, srcTile);
+	SetTile(dstX, dstY, srcTile.GetState(), srcTile.GetColor());
 	if (!bKeepSrc)
 	{
-		SetTile(srcX, srcY, ETileState::EMPTY);
+		SetTile(srcX, srcY, ETileState::EMPTY, EConsoleColor::WHITE);
 	}
 }
 
@@ -154,11 +160,11 @@ void GameContext::Swap(int32_t srcX, int32_t srcY, int32_t dstX, int32_t dstY)
 		return;
 	}
 
-	ETileState srcTile = GetTile(srcX, srcY);
-	ETileState dstTile = GetTile(dstX, dstY);
+	Tile srcTile = GetTile(srcX, srcY);
+	Tile dstTile = GetTile(dstX, dstY);
 
-	SetTile(dstX, dstY, srcTile, true);
-	SetTile(srcX, srcY, dstTile, true);
+	SetTile(dstX, dstY, srcTile.GetState(), srcTile.GetColor(), true);
+	SetTile(srcX, srcY, dstTile.GetState(), dstTile.GetColor(), true);
 }
 
 void GameContext::Swap(const Position& srcPosition, const Position& dstPosition)
