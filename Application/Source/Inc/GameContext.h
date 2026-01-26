@@ -25,11 +25,11 @@ public:
 	void Reset();
 
 	void SetDirtyTile(bool isDirty) { _isDirtyTile = isDirty; }
-	void SetTile(int32_t x, int32_t y, const ETile& tile, bool bForceSet = false);
-	void SetTile(const Position& position, const ETile& tile);
+	void SetTile(int32_t x, int32_t y, const ETileState& tile, bool bForceSet = false);
+	void SetTile(const Position& position, const ETileState& tile);
 
-	const ETile& GetTile(int32_t x, int32_t y) const;
-	const ETile& GetTile(const Position& position) const;
+	const ETileState& GetTile(int32_t x, int32_t y) const;
+	const ETileState& GetTile(const Position& position) const;
 	const int32_t& GetRowSize() const { return _rowSize; }
 	const int32_t& GetColSize() const { return _colSize; }
 	const Position& GetStartPosition() const { return _startPosition; }
@@ -62,7 +62,7 @@ private:
 	int32_t _rowSize = 20; // 세로 크기
 	int32_t _colSize = 18; // 가로 크기
 
-	std::vector<ETile> _tiles;
+	std::vector<ETileState> _tiles;
 
 	Position _minPosition = { 0, 0 };
 	Position _maxPosition = { 0, 0 };

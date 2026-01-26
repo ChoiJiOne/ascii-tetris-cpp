@@ -24,5 +24,5 @@ private:
 	ConsoleManager* _consoleMgr = nullptr;
 	GameContext* _gameCtx = nullptr;
 
-	std::map<ETile, char> _tileCharMap;
+	std::map<ETileState, char> _tileCharMap;
 };

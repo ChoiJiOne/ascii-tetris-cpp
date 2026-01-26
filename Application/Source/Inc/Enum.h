@@ -1,6 +1,6 @@
 #pragma once
 
-enum class ETile
+enum class ETileState
 {
 	EMPTY = 0x00,
 	WALL  = 0x01,

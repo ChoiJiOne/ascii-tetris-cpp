@@ -8,8 +8,8 @@ GameRenderer::GameRenderer(ConsoleManager* consoleMgr, GameContext* gameCtx)
 {
 	_tileCharMap =
 	{
-		{ ETile::EMPTY, ' ' },
-		{ ETile::WALL, '#' },
+		{ ETileState::EMPTY, ' ' },
+		{ ETileState::WALL, '#' },
 	};
 }
 

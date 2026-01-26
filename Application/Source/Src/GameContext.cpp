@@ -4,7 +4,7 @@
 
 GameContext::GameContext()
 {
-	_tiles = std::vector<ETile>(_rowSize * _colSize, ETile::EMPTY);
+	_tiles = std::vector<ETileState>(_rowSize * _colSize, ETileState::EMPTY);
 	_minPosition = { 1, 1 };
 	_maxPosition = { _colSize - 2, _rowSize - 2 };
 	_startPosition = { _colSize / 3, 1 };
@@ -20,13 +20,13 @@ void GameContext::Reset()
 	{
 		for (int x = 0; x < _colSize; ++x)
 		{
-			ETile tile = IsOutline(x, y) ? ETile::WALL : ETile::EMPTY;
+			ETileState tile = IsOutline(x, y) ? ETileState::WALL : ETileState::EMPTY;
 			SetTile(x, y, tile);
 		}
 	}
 }
 
-void GameContext::SetTile(int32_t x, int32_t y, const ETile& tile, bool bForceSet)
+void GameContext::SetTile(int32_t x, int32_t y, const ETileState& tile, bool bForceSet)
 {
 	CHECK(IsValidTile(x, y));
 
@@ -40,12 +40,12 @@ void GameContext::SetTile(int32_t x, int32_t y, const ETile& tile, bool bForceSe
 	_isDirtyTile = true;
 }
 
-void GameContext::SetTile(const Position& position, const ETile& tile)
+void GameContext::SetTile(const Position& position, const ETileState& tile)
 {
 	return SetTile(position.x, position.y, tile);
 }
 
-const ETile& GameContext::GetTile(int32_t x, int32_t y) const
+const ETileState& GameContext::GetTile(int32_t x, int32_t y) const
 {
 	CHECK(IsValidTile(x, y));
 
@@ -53,7 +53,7 @@ const ETile& GameContext::GetTile(int32_t x, int32_t y) const
 	return _tiles[offset];
 }
 
-const ETile& GameContext::GetTile(const Position& position) const
+const ETileState& GameContext::GetTile(const Position& position) const
 {
 	return GetTile(position.x, position.y);
 }
@@ -72,7 +72,7 @@ bool GameContext::HasEmptyTile() const
 {
 	for (const auto& tile : _tiles)
 	{
-		if (tile == ETile::EMPTY)
+		if (tile == ETileState::EMPTY)
 		{
 			return true;
 		}
@@ -98,10 +98,10 @@ bool GameContext::CanMoveTo(int32_t srcX, int32_t srcY, int32_t dstX, int32_t ds
 		return false;
 	}
 
-	ETile srcTile = GetTile(srcX, srcY);
-	ETile dstTile = GetTile(dstX, dstY);
+	ETileState srcTile = GetTile(srcX, srcY);
+	ETileState dstTile = GetTile(dstX, dstY);
 
-	bool bCanMove = (dstTile == ETile::EMPTY);
+	bool bCanMove = (dstTile == ETileState::EMPTY);
 	return bCanMove;
 }
 
@@ -117,13 +117,13 @@ void GameContext::MoveTo(int32_t srcX, int32_t srcY, int32_t dstX, int32_t dstY,
 		return;
 	}
 
-	ETile srcTile = GetTile(srcX, srcY);
-	ETile dstTile = GetTile(dstX, dstY);
+	ETileState srcTile = GetTile(srcX, srcY);
+	ETileState dstTile = GetTile(dstX, dstY);
 
 	SetTile(dstX, dstY, srcTile);
 	if (!bKeepSrc)
 	{
-		SetTile(srcX, srcY, ETile::EMPTY);
+		SetTile(srcX, srcY, ETileState::EMPTY);
 	}
 }
 
@@ -154,8 +154,8 @@ void GameContext::Swap(int32_t srcX, int32_t srcY, int32_t dstX, int32_t dstY)
 		return;
 	}
 
-	ETile srcTile = GetTile(srcX, srcY);
-	ETile dstTile = GetTile(dstX, dstY);
+	ETileState srcTile = GetTile(srcX, srcY);
+	ETileState dstTile = GetTile(dstX, dstY);
 
 	SetTile(dstX, dstY, srcTile, true);
 	SetTile(srcX, srcY, dstTile, true);

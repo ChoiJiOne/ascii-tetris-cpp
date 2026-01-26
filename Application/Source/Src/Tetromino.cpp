@@ -24,10 +24,10 @@ void Tetromino::Reset()
 {
 	// TODO: 수정 예정 (임시 코드)
 	const Position& startPosition = _ctx->GetStartPosition();
-	_ctx->SetTile(startPosition.x, startPosition.y, ETile::WALL);
-	_ctx->SetTile(startPosition.x + 1, startPosition.y, ETile::WALL);
-	_ctx->SetTile(startPosition.x + 2, startPosition.y, ETile::WALL);
-	_ctx->SetTile(startPosition.x + 3, startPosition.y, ETile::WALL);
+	_ctx->SetTile(startPosition.x, startPosition.y, ETileState::WALL);
+	_ctx->SetTile(startPosition.x + 1, startPosition.y, ETileState::WALL);
+	_ctx->SetTile(startPosition.x + 2, startPosition.y, ETileState::WALL);
+	_ctx->SetTile(startPosition.x + 3, startPosition.y, ETileState::WALL);
 }
 
 void Tetromino::Release()
