@@ -22,6 +22,11 @@ add_library(${FRAMEWORK_PROJECT_NAME} STATIC
 )
 
 target_include_directories(${FRAMEWORK_PROJECT_NAME} PUBLIC ${FRAMEWORK_PROJECT_HEADER_FILE_PATH} ${FRAMEWORK_PROJECT_SOURCE_FILE_PATH})
+target_link_libraries(
+    ${FRAMEWORK_PROJECT_NAME} PUBLIC
+    Pathcch.lib 
+    Shlwapi.lib
+)
 target_compile_definitions(
     ${FRAMEWORK_PROJECT_NAME}
     PUBLIC
