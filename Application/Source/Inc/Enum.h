@@ -2,8 +2,10 @@
 
 enum class ETileState
 {
-	EMPTY = 0x00,
-	WALL  = 0x01,
+	EMPTY  = 0x00,
+	WALL   = 0x01,
+	ACTIVE = 0x02,
+	FIXED  = 0x03,
 };
 
 enum class EMoveDirection
