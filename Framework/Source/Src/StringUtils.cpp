@@ -24,3 +24,15 @@ std::wstring StringUtils::PrintF(const wchar_t* format, ...)
 
 	return std::wstring(_wcharBuffer, size);
 }
+
+std::wstring StringUtils::ConvertString(const std::string& text)
+{
+	std::size_t size = std::mbstowcs(_wcharBuffer, text.c_str(), MAX_STRING_BUFFER_SIZE);
+	return std::wstring(_wcharBuffer, size);
+}
+
+std::string StringUtils::ConvertString(const std::wstring& text)
+{
+	std::size_t size = std::wcstombs(_charBuffer, text.c_str(), MAX_STRING_BUFFER_SIZE);
+	return std::string(_charBuffer, size);
+}

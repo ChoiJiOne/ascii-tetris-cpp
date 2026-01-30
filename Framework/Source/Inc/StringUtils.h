@@ -8,6 +8,9 @@ class StringUtils
 public:
 	static std::string PrintF(const char* format, ...);
 	static std::wstring PrintF(const wchar_t* format, ...);
+
+	std::wstring ConvertString(const std::string& text);
+	std::string ConvertString(const std::wstring& text);
 	
 private:
 	static const uint32_t MAX_STRING_BUFFER_SIZE = 1024;
