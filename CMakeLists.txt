@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.27)
 
-set(PROJECT_NAME "Tetris")
+set(PROJECT_NAME "Snake")
 project(${PROJECT_NAME} LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)

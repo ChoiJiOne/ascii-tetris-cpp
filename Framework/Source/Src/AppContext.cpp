@@ -1,8 +1,7 @@
 #include "AppContext.h"
 
-AppContext::AppContext(ActorManager* actorMgr, ConsoleManager* consoleMgr, InputManager* inputMgr)
+AppContext::AppContext(ActorManager* actorMgr, InputManager* inputMgr)
 	: _actorMgr(actorMgr)
-	, _consoleMgr(consoleMgr)
 	, _inputMgr(inputMgr)
 {
 }
@@ -10,6 +9,5 @@ AppContext::AppContext(ActorManager* actorMgr, ConsoleManager* consoleMgr, Input
 AppContext::~AppContext()
 {
 	_actorMgr = nullptr;
-	_consoleMgr = nullptr;
 	_inputMgr = nullptr;
 }

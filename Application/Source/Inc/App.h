@@ -3,9 +3,6 @@
 #include "AppContext.h"
 #include "IApp.h"
 
-#include "GameContext.h"
-#include "GameRenderer.h"
-
 class App : public IApp
 {
 public:
@@ -22,8 +19,5 @@ public:
 	virtual Result<void> OnShutdown(const AppContext& appCtx) override;
 
 private:
-	GameContext _ctx;
-	GameRenderer _renderer;
-
 	std::vector<IActor*> _actors;
 };

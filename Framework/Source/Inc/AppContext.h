@@ -3,13 +3,12 @@
 #include <functional>
 
 #include "ActorManager.h"
-#include "ConsoleManager.h"
 #include "InputManager.h"
 
 class AppContext
 {
 public:
-	AppContext(ActorManager* actorMgr, ConsoleManager* consoleMgr, InputManager* inputMgr);
+	AppContext(ActorManager* actorMgr, InputManager* inputMgr);
 	virtual ~AppContext();
 
 	DISALLOW_COPY_AND_ASSIGN(AppContext);
@@ -24,12 +23,10 @@ public:
 	}
 
 	ActorManager* GetActorManager() const { return _actorMgr; }
-	ConsoleManager* GetConsoleManager() const { return _consoleMgr; }
 	InputManager* GetInputManager() const { return _inputMgr; }
 
 private:
 	ActorManager* _actorMgr = nullptr;
-	ConsoleManager* _consoleMgr = nullptr;
 	InputManager* _inputMgr = nullptr;
 
 	std::function<void()> _requestQuit;

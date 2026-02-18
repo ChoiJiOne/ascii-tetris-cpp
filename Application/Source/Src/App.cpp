@@ -1,34 +1,13 @@
 #include "FileUtils.h"
 
 #include "App.h"
-#include "Tetromino.h"
 
 App::App() 
-	: _renderer(ConsoleManager::GetPtr(), &_ctx)
 {
 }
 
 Result<void> App::OnStartup(const AppContext& appCtx)
 {
-	ConsoleManager* consoleMgr = appCtx.GetConsoleManager();
-	if (consoleMgr == nullptr)
-	{
-		return Result<void>::Fail(MAKE_ERROR(EErrorCode::INVALID_ARGUMENT, "INVALID_CONSOLE_MANAGER_FROM_APP_CONTEXT"));
-	}
-
-	consoleMgr->SetVisibleCursor(false);
-	consoleMgr->SetTitle("Tetris"); // TODO: 하드 코딩 제거 필요.
-	consoleMgr->Clear();
-
-	Tetromino* tetromino = appCtx.GetActorManager()->Create<Tetromino>(&_ctx);
-	_actors =
-	{
-		tetromino,
-	};
-
-	_ctx.Reset();
-	tetromino->Reset(); // TODO: 임시 코드 (삭제 예정)
-
 	return Result<void>::Success();
 }
 
@@ -55,18 +34,9 @@ void App::OnPostTick(const AppContext& appCtx, float deltaSeconds)
 
 void App::OnRender(const AppContext& appCtx)
 {
-	_renderer.Render();
 }
 
 Result<void> App::OnShutdown(const AppContext& appCtx)
 {
-	ConsoleManager* consoleMgr = appCtx.GetConsoleManager();
-	if (consoleMgr == nullptr)
-	{
-		return Result<void>::Fail(MAKE_ERROR(EErrorCode::INVALID_ARGUMENT, "INVALID_CONSOLE_MANAGER_FROM_APP_CONTEXT"));
-	}
-
-	consoleMgr->SetVisibleCursor(true);
-
 	return Result<void>::Success();
 }

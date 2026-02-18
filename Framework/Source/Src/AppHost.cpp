@@ -15,13 +15,6 @@ Result<void> AppHost::Startup()
 		return Result<void>::Fail(MAKE_ERROR(EErrorCode::ALREADY_INITIALIZED, "FAILED_TO_STARTUP_FRAMEWORK_APP"));
 	}
 
-	ConsoleManager& consoleMgr = ConsoleManager::Get();
-	Result<void> resultConsoleMgrStartup = consoleMgr.Startup();
-	if (!resultConsoleMgrStartup.IsSuccess())
-	{
-		return resultConsoleMgrStartup;
-	}
-
 	InputManager& inputMgr = InputManager::Get();
 	Result<void> resultInputMgrStartup = inputMgr.Startup();
 	if (!resultInputMgrStartup.IsSuccess())
@@ -42,7 +35,7 @@ Result<void> AppHost::Startup()
 
 Result<void> AppHost::Run(IApp& app)
 {
-	AppContext ctx(ActorManager::GetPtr(), ConsoleManager::GetPtr(), InputManager::GetPtr());
+	AppContext ctx(ActorManager::GetPtr(), InputManager::GetPtr());
 	ctx.SetRequestQuit([this]() { _isQuit = true; });
 
 	Result<void> resultStartup = app.OnStartup(ctx);
@@ -88,13 +81,6 @@ Result<void> AppHost::Shutdown()
 	if (!resultInputMgrShutdown.IsSuccess())
 	{
 		return resultInputMgrShutdown;
-	}
-
-	ConsoleManager& consoleMgr = ConsoleManager::Get();
-	Result<void> resultConsoleMgrShutdown = consoleMgr.Shutdown();
-	if (!resultConsoleMgrShutdown.IsSuccess())
-	{
-		return resultConsoleMgrShutdown;
 	}
 
 	_isInitialized = false;
